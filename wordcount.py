@@ -49,6 +49,50 @@ import sys
 
 ###
 
+
+def create_hash_from_file(filename):
+    """Creates list of tuples (word, count) from file <filename>"""
+    input_file = open(filename, 'r')
+
+    word_list = input_file.read().lower().split()
+
+    input_file.close()
+
+    unique_words = set()
+
+    for word in word_list:
+        unique_words.add(word)
+
+    word_count_list = [(word, word_list.count(word)) for word in unique_words]
+
+    return sorted(word_count_list, key=lambda x: x[0])
+
+
+def print_words(filename):
+    """For file <filename>, count the frequency of occurance for each word in the file and generate a sorted list of tuples of the form:
+    word1 count1
+    word2 count2
+    """
+    word_hash = create_hash_from_file(filename)
+
+    for item in word_hash:
+        print item[0], item[1]
+
+
+def print_top(filename):
+    """For file <filename>, count the frequency of occurance for each word in the file and generate a list of the 20 most frequently occurring words
+    word1 count1
+    word2 count2
+    """
+    word_hash = create_hash_from_file(filename)
+
+    top_count_word_list = sorted(
+        word_hash, key=lambda x: x[1], reverse=True)[:20]
+
+    for i in range(len(top_count_word_list)):
+        print top_count_word_list[i][0], top_count_word_list[i][1]
+
+
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 
